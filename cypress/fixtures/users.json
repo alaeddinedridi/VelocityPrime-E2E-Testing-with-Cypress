@@ -1,0 +1,46 @@
+[
+  
+  {
+    "scenario":"Empty email only",
+    "email": "",
+    "password": "Admin@1234",
+    "expected": "fail",
+    "emailError": "email is a required field"
+  },
+  {
+    "scenario":"Empty password only",
+    "email": "admin2@velocity-prime.com",
+    "password": "",
+    "expected": "fail",
+    "passwordError": "Password is required"
+  },
+  {
+    "scenario":"Empty email and password",
+    "email": "",
+    "password": "",
+    "expected": "fail",
+    "emailError": "Email is required",
+    "passwordError": "Password is required"
+  },
+  {
+    "scenario":"Wrong credentials",
+    "email": "newaccount@velocity-prime.com",
+    "password": "Admin@1234",
+    "expected": "fail",
+    "unifiedError": "Check that email/password exist and correct"
+  },
+  {
+    "scenario":"Weak password",
+    "email": "admin2@velocity-prime.com",
+    "password": "weakpass",
+    "expected": "fail",
+    "passwordError": "Weak password"
+  },
+  {
+    "scenario":"Invalid email format",
+    "email": "invalidemail",
+    "password": "Admin@1234",
+    "expected": "fail",
+    "emailError": "Invalid email format"
+  }
+]
