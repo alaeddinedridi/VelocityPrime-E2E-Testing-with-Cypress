@@ -2,25 +2,26 @@ export class ProductPage {
 
     getProductPrice=()=>{
         return cy.getByData("product-price").invoke('text').then((priceStr) => {
-            const productPrice = Number(priceStr.split(" ")[1]);
-            cy.log("Product price:", productPrice);
-            return productPrice; // ✅ returns from inside .then()
+            const productPrice = Number(priceStr.split(" ")[1])
+            cy.log("Product price:", productPrice)
+            return cy.wrap(productPrice)
         });
     }
 
     getProductName=()=>{
-        cy.getByData("product-name").invoke('text').as("productName")
-        const productName=cy.get("@productName")    
-        cy.log("Product name:",productName)
-        return productName
-        
+        return cy.getByData("product-name").then(($el) => {
+            const productName = $el.text()
+            cy.log("Product name:",productName)
+            return cy.wrap(productName)
+        })   
     }
 
     getProductDescription=()=>{
-        cy.getByData("product-description").invoke('text').as("productDescription")
-        const productDescription=cy.get("@productDescription")
-        cy.log("Product description:",productDescription)
-        return productDescription
+        return cy.getByData("product-description").then(($el) => {
+            const productDescription = $el.text()
+            cy.log("Product description:",productDescription)
+            return cy.wrap(productDescription)
+        })
     }
 
     addToCart=()=>{

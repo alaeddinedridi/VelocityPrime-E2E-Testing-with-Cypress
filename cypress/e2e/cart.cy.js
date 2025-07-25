@@ -23,29 +23,25 @@ describe('Cart page', () => {
     })
 
     it('Cart should be empty', () => {
-        let shippingPrice=undefined
-        let tax=undefined
-        let total=undefined
-        let priceOfItems=undefined
 
         cy.contains("Cart is empty.")
 
-        cy.getByData("number_of_items").then(($el) => {
-            priceOfItems = Number($el.text().split(" ")[1])
-            expect(priceOfItems).to.equal(0)
+        cartPage.getCartPriceOfItems().then((priceOfItems)=>{
+            expect(priceOfItems).to.equal(0) 
         })
-        cy.getByData("shipping_price").then(($el) => {
-            shippingPrice = Number($el.text().split(" ")[1])
+
+        cartPage.getCartShippingPrice().then((shippingPrice)=>{
             expect(shippingPrice).to.equal(0)
         })
-        cy.getByData("tax").then(($el) => {
-            tax = Number($el.text().split(" ")[1])
+        
+        cartPage.getCartTax().then((tax)=>{
             expect(tax).to.equal(0)
         })
-        cy.getByData("total").then(($el) => {
-            total = Number($el.text().split(" ")[1])
+ 
+        cartPage.getCartTotal().then((total)=>{
             expect(total).to.equal(0)
         })
+      
     })
 
     
@@ -56,62 +52,73 @@ describe('Cart page', () => {
         productsPage.viewProduct()
 
         cy.waitForLoadingToFinish()
-     
+
         let productName=undefined
+        let productPrice=undefined
+        let productDescription=undefined
+        let cartProductName=undefined
+        let cartProductPrice=undefined
+        let cartProductDescription=undefined
+        let priceOfItems=undefined
+        let shippingPrice=undefined
+        let tax=undefined
+        let total=undefined
 
         productPage.getProductName().then((pName)=>{
             productName=pName
         })
 
         productPage.getProductPrice().then((price) => {
-            expect(price).to.equal(29.99); // Or whatever you expect
-        });
+            productPrice=price
+        })
 
-        let productDescription=productPage.getProductDescription().then((productDescription)=>{
-            return productDescription
+        productPage.getProductDescription().then((pDescription)=>{
+            productDescription=pDescription
         })
         
         productPage.addToCart()
         productPage.goToCart()
 
-        let cartProductName=cartPage.getCartProductName().then((cartProductName)=>{
-            return cartProductName
+        cartPage.getCartProductName().then((cartPName)=>{
+            cartProductName=cartPName
         })
 
-        //let cartProductPrice=cartPage.getCartProductPrice()
+        cartPage.getCartProductPrice().then((cartPPrice)=>{
+            cartProductPrice=cartPPrice
+        })
 
-        let cartProductDescription=cartPage.getCartProductDescription().then((cartProductDescription)=>{
-            return cartProductDescription
+        cartPage.getCartProductDescription().then((cartPDescription)=>{
+            cartProductDescription=cartPDescription
         })
     
-        // let priceOfItems=cartPage.getCartPriceOfItems().then((priceOfItems)=>{
-        //     return priceOfItems
-        // })
-        // let shippingPrice=cartPage.getCartShippingPrice().then((shippingPrice)=>{
-        //     return shippingPrice
-        // })
-        // let tax=cartPage.getCartTax().then((tax)=>{
-        //     return tax
-        // })
-        // let total=cartPage.getCartTotal().then((total)=>{
-        //     return total
-        // })
+        cartPage.getCartPriceOfItems().then((itemsPrice)=>{
+            priceOfItems=itemsPrice
+        })
+        cartPage.getCartShippingPrice().then((priceOfShipping)=>{
+            shippingPrice=priceOfShipping
+        })
+        cartPage.getCartTax().then((cartTax)=>{
+            tax=cartTax
+        })
+        cartPage.getCartTotal().then((cartTotal)=>{
+            total=cartTotal
+        })
 
 
 
-        // cy.then(() => {
-        //     let expectedShippingPrice= cartPage.calculateShippingPrice(cartProductPrice)
-        //     let expectedTax= cartPage.calculateTax(cartProductPrice)
-        //     let expectedTotalPrice= cartPage.calculateTotalPrice(cartProductPrice,expectedShippingPrice,expectedTax)
+        cy.then(() => {
+            let expectedShippingPrice= cartPage.calculateShippingPrice(cartProductPrice)
+            let expectedTax= cartPage.calculateTax(cartProductPrice)
+            let expectedTotalPrice= cartPage.calculateTotalPrice(cartProductPrice,expectedShippingPrice,expectedTax)
 
-        //     expect(cartProductName).to.equal(productName)
-        //     expect(cartProductPrice).to.equal(productPrice)
-        //     expect(cartProductDescription).to.equal(productDescription)
-        //     expect(shippingPrice).to.equal(expectedShippingPrice)
-        //     expect(tax).to.equal(expectedTax)
-        //     expect(total).to.equal(expectedTotalPrice)
-        //     expect(priceOfItems).to.equal(cartProductPrice)
-        // })
+            expect(cartProductName).to.equal(productName)
+            expect(cartProductPrice).to.equal(productPrice)
+            expect(cartProductDescription).to.equal(productDescription)
+            expect(shippingPrice).to.equal(expectedShippingPrice)
+            expect(tax).to.equal(expectedTax)
+            expect(total).to.equal(expectedTotalPrice)
+            expect(priceOfItems).to.equal(cartProductPrice)
+        })
 
     })
 })

@@ -48,11 +48,11 @@ describe('Authentication page', () => {
                     cy.getByData("passworderror").should("contain",user.passwordError)
                 }
 
-                // if (user.unifiedError){
-                //     cy.getByData("unified-error").should("be.visible").and("contain",user.unifiedError)
-                // }
+                if (user.unifiedError){
+                    cy.getByData("unified-error").should("be.visible").and("contain",user.unifiedError)
+                }
             }
-            cy.visit("/#/admin/login")
+            
 
         })
     })

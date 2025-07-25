@@ -17,9 +17,9 @@ export class CartPage {
     }
 
     calculateTotalPrice=(cartProductPrice,expectedShippingPrice,expectedTax)=>{
-        const total = round(cartProductPrice + expectedShippingPrice + expectedTax)   
+        const total = this.round(cartProductPrice + expectedShippingPrice + expectedTax)   
         cy.log("Expected total price:",total)
-        return total 
+        return total
     }
 
     goShopping=()=>{
@@ -30,19 +30,21 @@ export class CartPage {
         return cy.getByData("cart-product-price").invoke('text').then((pricestr)=>{
             const cartProductPrice = Number(pricestr.split(" ")[1])
             cy.log("Cart product price:",cartProductPrice)
-            return cartProductPrice
+            return cy.wrap(cartProductPrice)
         })
     }
 
     getCartProductName=()=>{
         return cy.getByData("cart-product-name").invoke('text').then((cartProductName)=>{
             cy.log("Cart product name:",cartProductName)
+            return cy.wrap(cartProductName)
         })
     }
 
     getCartProductDescription=()=>{
         return cy.getByData("cart-product-description").invoke('text').then((cartProductDescription)=>{
             cy.log("Cart product description:",cartProductDescription)
+            return cy.wrap(cartProductDescription)
         })
     }
 
@@ -50,7 +52,7 @@ export class CartPage {
         return cy.getByData("number_of_items").then(($el) => {
             const priceOfItems = Number($el.text().split(" ")[1])
             cy.log("Actual price of items:",priceOfItems)
-            return priceOfItems
+            return cy.wrap(priceOfItems)
         })
     }
 
@@ -58,7 +60,7 @@ export class CartPage {
         return cy.getByData("shipping_price").then(($el) => {
             const shippingPrice = Number($el.text().split(" ")[1])
             cy.log("Actual shipping price:",shippingPrice)
-            return shippingPrice
+            return cy.wrap(shippingPrice)
         })
     }
 
@@ -66,7 +68,7 @@ export class CartPage {
         return cy.getByData("tax").then(($el) => {
             const tax = Number($el.text().split(" ")[1])
             cy.log("Actual tax:",tax)
-            return tax
+            return cy.wrap(tax)
         })
     }
 
@@ -74,7 +76,7 @@ export class CartPage {
         return cy.getByData("total").then(($el) => {
             const total = Number($el.text().split(" ")[1])
             cy.log("Actual total price of items:",total)
-            return total
+            return cy.wrap(total)
         })
     }
     
