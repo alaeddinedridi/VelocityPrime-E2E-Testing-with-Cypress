@@ -79,6 +79,28 @@ export class CartPage {
             return cy.wrap(total)
         })
     }
+
+    getCartQuantity=()=>{
+        return cy.getByData("quantity").then(($el) => {
+            const quantity = Number($el.text())
+            cy.log("Actual quantity of a product in cart:",quantity)
+            return cy.wrap(quantity)
+        })
+    }
     
+    getCartSize=()=>{
+        return cy.getByData("size").then(($el) => {
+            const size = $el.text()
+            cy.log("Actual size of a product in cart:",size)
+            return cy.wrap(size)
+        })
+    }
+
+    removeCartProduct=()=>{
+        return cy.getByData("remove-product").then(($el)=>{
+            cy.log("Remove product from cart")
+            cy.wrap($el).click()
+        })
+    }
 }
 

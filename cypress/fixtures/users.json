@@ -42,5 +42,11 @@
     "password": "Admin@1234",
     "expected": "fail",
     "emailError": "Invalid email format"
+  },
+  {
+    "scenario":"Valid crendentials",
+    "email": "admin2@velocity-prime.com",
+    "password": "Admin@1234",
+    "expected": "success"
   }
 ]

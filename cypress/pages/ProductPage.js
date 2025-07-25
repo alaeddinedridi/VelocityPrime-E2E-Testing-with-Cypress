@@ -31,4 +31,23 @@ export class ProductPage {
     goToCart=()=>{
         cy.getByData('cart-icon').click()
     }
+
+    selectSize=()=>{
+        return cy.getByData("medium").then(($el) => {
+            const size = $el.text() 
+            cy.wrap($el).click()
+            cy.log("selected size:",size)
+            return cy.wrap(size)
+        })
+    }
+    
+    selectQuantity=()=>{
+        return cy.getByData("increase").then(($el)=>{
+            cy.wrap($el).click()
+            cy.getByData("quantity").invoke("val").then((value) => {
+                cy.log("selected quantity:",value)
+                return cy.wrap(Number(value))
+            })
+        })
+    }
 }
