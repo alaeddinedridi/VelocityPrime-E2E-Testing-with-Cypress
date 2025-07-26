@@ -14,6 +14,7 @@ describe('Cart page', () => {
     beforeEach(() => {
         homePage.visit()
         cy.getByData('cart-icon').click()
+        cy.waitForLoadingToFinish()
     })
 
     it('Check page title', () => {
@@ -137,7 +138,14 @@ describe('Cart page', () => {
 
     })
 
+    // Cypress runs each test in isolation by default, State (like local storage, cookies, session storage) is cleared between tests
     it('Remove one product from the cart', () => {
+        cartPage.goShopping()
+        productsPage.viewProduct()
+        cy.waitForLoadingToFinish()
+        productPage.addToCart()
+        productPage.goToCart()
+
         cartPage.removeCartProduct().then(()=>{
             assertCartIsEmpty(cartPage)
         })
