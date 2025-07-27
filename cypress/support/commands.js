@@ -32,3 +32,16 @@ Cypress.Commands.add("getByData", (selector) => {
 Cypress.Commands.add('waitForLoadingToFinish', () => {
     cy.getByData('loading-spinner').should('not.exist')
 })
+
+
+Cypress.Commands.add('getPrices', () => {
+    return cy.getByData("product_price").then(($priceElements)=>{
+        let prices=[...$priceElements].map(priceElement=> {
+            const priceStr=priceElement.innerText
+            const productPrice = Number(priceStr.split(" ")[1])
+            cy.log("The price:",productPrice)
+            return productPrice
+        })
+        return cy.wrap(prices)
+    })
+})
