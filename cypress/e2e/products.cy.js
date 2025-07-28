@@ -13,39 +13,62 @@ describe('products tests', () => {
     let sortedPricesDesc=[]
     let sortedPricesAsc=[]
 
-    beforeEach(() => {
-        homePage.visit()
-        cy.getByData('men').click()
-        cy.waitForLoadingToFinish()
+    const viewports = [
+        { name: 'iphone-6', type: 'mobile' },
+        { name: 'ipad-2', type: 'tablet' },
+        { name: 'macbook-15', type: 'desktop' }
+    ]
 
-    })
+    // beforeEach(() => {
+    //     homePage.visit()
+    //     cy.getByData('men').click()
+    //     cy.waitForLoadingToFinish()
 
-    it('Verify products sorted by price', () => {
-        cy.wait(2000)
+    // })
 
-        productsPage.sortProductsByPriceDesc()
+    viewports.forEach(({ name, type }) => {
+        it(`Verify products sorted by price on ${name}`, () => {
 
-        cy.getPrices().then((prices) => {
-            supposedToBesortedPricesDesc=prices
-        })
+            cy.viewport(name)
+            homePage.visit()
+            if (type === "mobile" || type === "tablet" ){
+                productsPage.showNavMenu()
+            }
 
-        productsPage.verifySortedByPriceDesc().then((prices)=>{
-            sortedPricesDesc=prices
-        })
+            cy.wait(2000)
+            
+            cy.getByData('men').click()
 
-        productsPage.sortProductsByPriceAsc()
+            cy.wait(2000)
 
-        cy.getPrices().then((prices) => {
-            supposedToBesortedPricesAsc=prices
-        })
+            if (type === "mobile" || type === "tablet" ){
+                productsPage.showFilters()
+            }
 
-        productsPage.verifySortedByPriceAsc().then((prices)=>{
-            sortedPricesAsc=prices
-        })
+            productsPage.sortProductsByPriceDesc()
 
-        cy.then(() => {
-            expect(supposedToBesortedPricesDesc).to.deep.equal(sortedPricesDesc)
-            expect(supposedToBesortedPricesAsc).to.deep.equal(sortedPricesAsc)
+            cy.getPrices().then((prices) => {
+                supposedToBesortedPricesDesc=prices
+            })
+
+            productsPage.verifySortedByPriceDesc().then((prices)=>{
+                sortedPricesDesc=prices
+            })
+
+            productsPage.sortProductsByPriceAsc()
+
+            cy.getPrices().then((prices) => {
+                supposedToBesortedPricesAsc=prices
+            })
+
+            productsPage.verifySortedByPriceAsc().then((prices)=>{
+                sortedPricesAsc=prices
+            })
+
+            cy.then(() => {
+                expect(supposedToBesortedPricesDesc).to.deep.equal(sortedPricesDesc)
+                expect(supposedToBesortedPricesAsc).to.deep.equal(sortedPricesAsc)
+            })
         })
     })
 

@@ -63,5 +63,16 @@ export class ProductsPage {
         })
     }
 
+    showFilters=()=>{
+        cy.getByData("show-filters").then(($el)=>{
+            cy.wrap($el).click()
+        })
+    }
+
+    showNavMenu=()=>{
+        cy.getByData("show-nav-menu").then(($el)=>{
+            cy.wrap($el).click()
+        })
+    }
    
 }
