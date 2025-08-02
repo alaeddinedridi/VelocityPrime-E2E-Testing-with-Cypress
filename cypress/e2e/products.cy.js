@@ -34,10 +34,14 @@ describe('products tests', () => {
             if (type === "mobile" || type === "tablet" ){
                 productsPage.showNavMenu()
             }
-
             cy.wait(2000)
+            cy.waitForLoadingToFinish()
             
-            cy.getByData('men').click()
+            if (type === "mobile" || type === "tablet" ){
+                cy.get('aside [data-test="men"]').click()
+            }else{
+                cy.get('header [data-test="men"]').click()
+            }
 
             cy.wait(2000)
 
@@ -46,6 +50,7 @@ describe('products tests', () => {
             }
 
             productsPage.sortProductsByPriceDesc()
+            cy.wait(2000)
 
             cy.getPrices().then((prices) => {
                 supposedToBesortedPricesDesc=prices
@@ -56,7 +61,8 @@ describe('products tests', () => {
             })
 
             productsPage.sortProductsByPriceAsc()
-
+            cy.wait(2000)
+            
             cy.getPrices().then((prices) => {
                 supposedToBesortedPricesAsc=prices
             })

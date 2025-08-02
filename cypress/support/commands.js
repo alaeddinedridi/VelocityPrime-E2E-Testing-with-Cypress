@@ -39,9 +39,9 @@ Cypress.Commands.add('getPrices', () => {
         let prices=[...$priceElements].map(priceElement=> {
             const priceStr=priceElement.innerText
             const productPrice = Number(priceStr.split(" ")[1])
-            cy.log("The price:",productPrice)
             return productPrice
         })
+        cy.log("The default order of products",prices)
         return cy.wrap(prices)
     })
 })

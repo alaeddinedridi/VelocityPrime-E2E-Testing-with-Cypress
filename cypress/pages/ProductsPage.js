@@ -26,6 +26,7 @@ export class ProductsPage {
     }
 
     sortProductsByPriceAsc=()=>{
+        cy.log("Click on the 'price low to high'")
         cy.getByData("low").then(($el)=>{
             cy.wrap($el).click()
         })
@@ -33,15 +34,16 @@ export class ProductsPage {
 
     verifySortedByPriceAsc=()=>{
         return cy.getPrices().then((prices) => {
-            cy.log("Prices:",prices)
+            cy.log("Actual products order by price:",prices)
             const sortedAsc = [...prices].sort((a, b) => a - b);
-            cy.log("sortedAsc:",sortedAsc)
+            cy.log("Expected products order by price:",sortedAsc)
             return cy.wrap(sortedAsc)
         })
     }
 
 
     sortProductsByPriceDesc=()=>{
+        cy.log("Click on the 'price high to low'")
         cy.getByData("high").then(($el)=>{
             cy.wrap($el).click()
         })
@@ -50,14 +52,15 @@ export class ProductsPage {
     verifySortedByPriceDesc=()=>{
        
         return cy.getPrices().then((prices) => {
-            cy.log("Prices:",prices)
+            cy.log("Actual products order by price:",prices)
             const sortedDesc = [...prices].sort((a, b) => b - a);
-            cy.log("sortedDesc:",sortedDesc)
+            cy.log("Expected products order by price:",sortedDesc)
             return cy.wrap(sortedDesc)
         })
     }
 
     showAvailableProducts=()=>{
+        cy.log("Only show products that are in stock")
         cy.getByData("available").then(($el)=>{
             cy.wrap($el).click()
         })
@@ -75,4 +78,7 @@ export class ProductsPage {
         })
     }
    
+    clickNavItem=()=>{
+        cy.getByData('men').click()
+    }
 }
