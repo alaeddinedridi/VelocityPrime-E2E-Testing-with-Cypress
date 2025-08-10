@@ -6,6 +6,7 @@ export class ProductsPage {
 
     
     sortProductsByLatest=()=>{
+        cy.log("Click on the 'The latest'")
         cy.getByData("latest").then(($el)=>{
             cy.wrap($el).click()
         })
@@ -16,13 +17,14 @@ export class ProductsPage {
     }
 
     sortProductsByNewest=()=>{
+        cy.log("Click on the 'The newest'")
         cy.getByData("newest").then(($el)=>{
             cy.wrap($el).click()
         })
     }
 
     verifySortedByNewest=()=>{
-
+        
     }
 
     sortProductsByPriceAsc=()=>{
